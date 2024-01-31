@@ -12,5 +12,5 @@ EXPOSE 80
 VOLUME /var/lib/phpmyadmin
 
 # Placeholder for setting the hostname at runtime
-CMD ["sh", "-c", "echo 'phpmyadmin.mydomain.com' > /etc/hostname && exec apache2-foreground"]
-CMD ["apache2-foreground"]
+# CMD ["sh", "-c", "echo 'phpmyadmin.mydomain.com' > /etc/hostname && exec apache2-foreground"]
+# CMD ["apache2-foreground"]
