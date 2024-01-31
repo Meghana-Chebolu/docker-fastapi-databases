@@ -1,34 +1,46 @@
-version: '3'
+version: '3.8'
 
 services:
-  redis:
-    image: "redis:latest"
-    container_name: redis_container
-    ports:
-      - "6379:6379"
-    restart: always
-    networks:
-      - my_network
-    volumes:
-      - redis-data:/data
 
-  pgadmin4:
-    image: "dpage/pgadmin4:latest"
-    container_name: pgadmin4_container
+  mysql:
+    build:
+      context: ./mysql
+    container_name: mysql
+    restart: unless-stopped
+    volumes:
+      - mysql-db:/var/lib/mysql
+    ports:
+      - '3306:3306'
+
+  phpmyadmin:
+    build:
+      context: ./mysql/phpmyadmn
+    container_name: phpmyadmin
+    ports:
+      - "8082:80" 
+
+  # ----------------------------------------------
+
+  postgresql:
+    build:
+      context: ./postgres
+    container_name: postgresql
     restart: always
     ports:
-      - "8888:80"
-    environment:
-      PGADMIN_DEFAULT_EMAIL: user-name@domain-name.com
-      PGADMIN_DEFAULT_PASSWORD: strong-password
-    volumes:
-      - pgadmin-data:/var/lib/pgadmin
-    networks:
-      - my_network
+      - "5432:5432"
+
+  pgadmin:
+    build:
+      context: ./postgres/pgadmin
+    container_name: pgadmin4
+    restart: always
+    ports:
+      - "8888:80"    
+
+  #----------------------------------------------        
 
 volumes:
-  redis-data:
-  pgadmin-data:
-
-networks:
-  my_network:
+  mysql-db:
+  postgresql:
+  phpmyadmin:
+  pgadmin:
