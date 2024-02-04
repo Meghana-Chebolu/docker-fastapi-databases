@@ -17,9 +17,10 @@ services:
       context: ./mysql/phpmyadmn
     container_name: phpmyadmin
     ports:
-      - "8082:80" 
+      - "8082:80"
+    volumes:
+      - phpmyadmin:/var/www/html
 
-  # ----------------------------------------------
   postgresql:
     build:
       context: ./postgres
@@ -27,6 +28,8 @@ services:
     restart: always
     ports:
       - "5432:5432"
+    volumes:
+      - postgresql:/var/lib/postgresql/data
 
   pgadmin:
     build:
@@ -34,18 +37,20 @@ services:
     container_name: pgadmin4
     restart: always
     ports:
-      - "8888:80"    
+      - "8888:80"
+    volumes:
+      - pgadmin:/var/lib/pgadmin
 
-  #----------------------------------------------       
   mongodb:
     build:
       context: ./mongodb
     container_name: mongodb
     restart: always
     ports:
-      - "27017:27017" 
+      - "27017:27017"
+    volumes:
+      - mongodb:/data/db
 
-  #----------------------------------------------    
   cassandra:
     build:
       context: ./cassandra
@@ -53,10 +58,12 @@ services:
     ports:
       - "9042:9042"
     volumes:
-      - ~/apps/cassandra:/var/lib/cassandra    
+      - cassandra:/var/lib/cassandra    
 
 volumes:
   mysql-db:
   postgresql:
   phpmyadmin:
   pgadmin:
+  mongodb:
+  cassandra:
