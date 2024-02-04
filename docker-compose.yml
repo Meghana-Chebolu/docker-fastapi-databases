@@ -37,7 +37,14 @@ services:
     ports:
       - "8888:80"    
 
-  #----------------------------------------------        
+  #----------------------------------------------       
+  mongodb:
+    build:
+      context: ./mongodb
+    container_name: mongodb
+    restart: always
+    ports:
+      - "27017:27017"
 
 volumes:
   mysql-db:
