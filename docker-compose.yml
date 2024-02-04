@@ -20,7 +20,6 @@ services:
       - "8082:80" 
 
   # ----------------------------------------------
-
   postgresql:
     build:
       context: ./postgres
@@ -44,7 +43,17 @@ services:
     container_name: mongodb
     restart: always
     ports:
-      - "27017:27017"
+      - "27017:27017" 
+
+  #----------------------------------------------    
+  cassandra:
+    build:
+      context: ./cassandra
+    container_name: cassandra
+    ports:
+      - "9042:9042"
+    volumes:
+      - ~/apps/cassandra:/var/lib/cassandra    
 
 volumes:
   mysql-db:
